@@ -66,7 +66,10 @@ class _PokedexPageState extends State<PokedexPage> {
                     ),
                   )
                 : null,
-            background: Image.asset('assets/images/pokemon.png'),
+            background: Image.asset(
+              'assets/images/pokedex.png',
+              scale: 1.5,
+            ),
             collapseMode: CollapseMode.none,
           );
         },
