@@ -1,4 +1,3 @@
-// model/pokemon.dart
 class Pokemon {
   final String name;
   final String url;
@@ -6,6 +5,9 @@ class Pokemon {
   final String imageUrl;
   final int height;
   final int weight;
+  final List<Stat> stats;
+  final List<Evolution> evolutions;
+  final List<String> moves;
 
   Pokemon({
     required this.name,
@@ -14,6 +16,9 @@ class Pokemon {
     required this.imageUrl,
     required this.height,
     required this.weight,
+    required this.stats,
+    required this.evolutions,
+    required this.moves,
   });
 
   factory Pokemon.fromJson(Map<String, dynamic> json) {
@@ -25,6 +30,38 @@ class Pokemon {
       imageUrl: json['sprites']['other']['official-artwork']['front_default'],
       height: json['height'],
       weight: json['weight'],
+      stats: List<Stat>.from(json['stats'].map((stat) => Stat.fromJson(stat))),
+      evolutions: [], // Implement evolution details fetching
+      moves:
+          List<String>.from(json['moves'].map((move) => move['move']['name'])),
+    );
+  }
+}
+
+class Stat {
+  final String name;
+  final int value;
+
+  Stat({required this.name, required this.value});
+
+  factory Stat.fromJson(Map<String, dynamic> json) {
+    return Stat(
+      name: json['stat']['name'],
+      value: json['base_stat'],
+    );
+  }
+}
+
+class Evolution {
+  final String name;
+  final String imageUrl;
+
+  Evolution({required this.name, required this.imageUrl});
+
+  factory Evolution.fromJson(Map<String, dynamic> json) {
+    return Evolution(
+      name: json['name'],
+      imageUrl: json['sprites']['other']['official-artwork']['front_default'],
     );
   }
 }
