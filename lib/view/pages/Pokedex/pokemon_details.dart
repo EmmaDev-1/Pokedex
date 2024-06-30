@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:pokedex/model/pokemon_model.dart';
+import 'package:pokedex/view/pages/Pokedex/Widgets/about.dart';
+import 'package:pokedex/view/pages/Pokedex/Widgets/base_stats.dart';
+import 'package:pokedex/view/pages/Pokedex/Widgets/evolution_chain.dart';
+import 'package:pokedex/view/pages/Pokedex/Widgets/moves.dart';
 
 class PokemonDetails extends StatefulWidget {
   final Pokemon pokemon;
-  PokemonDetails({super.key, required this.pokemon});
+  final Color color;
+  PokemonDetails({super.key, required this.pokemon, required this.color});
 
   @override
   State<PokemonDetails> createState() => _PokemonDetailsState();
@@ -17,7 +22,7 @@ class _PokemonDetailsState extends State<PokemonDetails> {
 
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.green,
+          backgroundColor: widget.color,
           elevation: 0,
           iconTheme: IconThemeData(
             color: Theme.of(context).colorScheme.background,
@@ -30,7 +35,8 @@ class _PokemonDetailsState extends State<PokemonDetails> {
               child: TabBarView(
                 children: [
                   AboutSection(pokemon: widget.pokemon),
-                  BaseStatsSection(pokemon: widget.pokemon),
+                  BaseStatsSection(
+                      pokemon: widget.pokemon, color: widget.color),
                   EvolutionSection(pokemon: widget.pokemon),
                   MovesSection(pokemon: widget.pokemon),
                 ],
@@ -48,7 +54,7 @@ class _PokemonDetailsState extends State<PokemonDetails> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(30), bottomRight: Radius.circular(30)),
-        color: Colors.green,
+        color: widget.color,
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.2),
@@ -73,7 +79,7 @@ class _PokemonDetailsState extends State<PokemonDetails> {
           Column(
             children: [
               Text(
-                widget.pokemon.name,
+                widget.pokemon.name.toUpperCase(),
                 style: TextStyle(
                   fontSize: MediaQuery.of(context).size.width * 0.09,
                   fontFamily: 'Quicksand-Bold',
@@ -140,70 +146,5 @@ class _PokemonDetailsState extends State<PokemonDetails> {
         ],
       ),
     );
-  }
-}
-
-class AboutSection extends StatelessWidget {
-  final Pokemon pokemon;
-
-  const AboutSection({Key? key, required this.pokemon}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              pokemon.name,
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            Text(
-              "Height: ${pokemon.height / 10} m\nWeight: ${pokemon.weight / 10} kg",
-              style: TextStyle(fontSize: 16),
-            ),
-            // Add more about details here
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class BaseStatsSection extends StatelessWidget {
-  final Pokemon pokemon;
-
-  const BaseStatsSection({Key? key, required this.pokemon}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    // Implement base stats section
-    return Center(child: Text("Base Stats Section"));
-  }
-}
-
-class EvolutionSection extends StatelessWidget {
-  final Pokemon pokemon;
-
-  const EvolutionSection({Key? key, required this.pokemon}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    // Implement evolution section
-    return Center(child: Text("Evolution Section"));
-  }
-}
-
-class MovesSection extends StatelessWidget {
-  final Pokemon pokemon;
-
-  const MovesSection({Key? key, required this.pokemon}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    // Implement moves section
-    return Center(child: Text("Moves Section"));
   }
 }

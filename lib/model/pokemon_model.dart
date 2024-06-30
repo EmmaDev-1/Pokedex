@@ -1,3 +1,6 @@
+import 'package:pokedex/model/pokemon_evolution_model.dart';
+import 'package:pokedex/model/pokemon_stats_model.dart';
+
 class Pokemon {
   final String name;
   final String url;
@@ -8,6 +11,10 @@ class Pokemon {
   final List<Stat> stats;
   final List<Evolution> evolutions;
   final List<String> moves;
+  final String description; // Nueva propiedad
+  final String gender; // Nueva propiedad
+  final List<String> eggGroups; // Nueva propiedad
+  final String eggCycle; // Nueva propiedad
 
   Pokemon({
     required this.name,
@@ -19,9 +26,14 @@ class Pokemon {
     required this.stats,
     required this.evolutions,
     required this.moves,
+    required this.description, // Nuevo parámetro
+    required this.gender, // Nuevo parámetro
+    required this.eggGroups, // Nuevo parámetro
+    required this.eggCycle, // Nuevo parámetro
   });
 
-  factory Pokemon.fromJson(Map<String, dynamic> json) {
+  factory Pokemon.fromJson(
+      Map<String, dynamic> json, List<Evolution> evolutions) {
     return Pokemon(
       name: json['name'],
       url: json['url'],
@@ -31,37 +43,15 @@ class Pokemon {
       height: json['height'],
       weight: json['weight'],
       stats: List<Stat>.from(json['stats'].map((stat) => Stat.fromJson(stat))),
-      evolutions: [], // Implement evolution details fetching
+      evolutions: evolutions, // Utiliza los datos de evoluciones
       moves:
           List<String>.from(json['moves'].map((move) => move['move']['name'])),
-    );
-  }
-}
-
-class Stat {
-  final String name;
-  final int value;
-
-  Stat({required this.name, required this.value});
-
-  factory Stat.fromJson(Map<String, dynamic> json) {
-    return Stat(
-      name: json['stat']['name'],
-      value: json['base_stat'],
-    );
-  }
-}
-
-class Evolution {
-  final String name;
-  final String imageUrl;
-
-  Evolution({required this.name, required this.imageUrl});
-
-  factory Evolution.fromJson(Map<String, dynamic> json) {
-    return Evolution(
-      name: json['name'],
-      imageUrl: json['sprites']['other']['official-artwork']['front_default'],
+      description:
+          json['description'], // Asume que obtienes este dato de algún lado
+      gender: json['gender'], // Asume que obtienes este dato de algún lado
+      eggGroups: List<String>.from(json['egg_groups'].map((group) =>
+          group['name'])), // Asume que obtienes este dato de algún lado
+      eggCycle: json['egg_cycle'], // Asume que obtienes este dato de algún lado
     );
   }
 }

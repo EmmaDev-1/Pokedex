@@ -2,10 +2,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:lottie/lottie.dart';
 import 'package:pokedex/utils/Navigation/navegationAnimationRightLeft.dart';
 import 'package:pokedex/utils/get_colors/get_pokemon_colors.dart';
 import 'package:pokedex/view/components/drawer.dart';
-import 'package:pokedex/view/pages/pokemon_details.dart';
+import 'package:pokedex/view/pages/Pokedex/pokemon_details.dart';
 import 'package:pokedex/view_model/pokemon_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -25,7 +26,10 @@ class _PokedexPageState extends State<PokedexPage> {
         backgroundColor: Theme.of(context).colorScheme.background,
         drawer: DrawerMenu(),
         body: CustomScrollView(
-          slivers: [appBarContent(), pokemonsContent()],
+          slivers: [
+            appBarContent(),
+            pokemonsContent(),
+          ],
         ),
       ),
     );
@@ -107,7 +111,21 @@ class _PokedexPageState extends State<PokedexPage> {
       child: Consumer<PokemonViewModel>(
         builder: (context, viewModel, child) {
           if (viewModel.isLoading && viewModel.pokemons.isEmpty) {
-            return Center(child: CircularProgressIndicator());
+            return Center(
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.25,
+                  ),
+                  Lottie.asset(
+                    'assets/animations/pokeballLoading.json',
+                    width: 100,
+                    height: 100,
+                    fit: BoxFit.fill,
+                  ),
+                ],
+              ),
+            );
           } else {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -143,7 +161,9 @@ class _PokedexPageState extends State<PokedexPage> {
                             Navigator.push(
                               context,
                               crearRuta(
-                                  context, PokemonDetails(pokemon: pokemon)),
+                                  context,
+                                  PokemonDetails(
+                                      pokemon: pokemon, color: color)),
                             );
                           },
                           child: Card(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pokedex/utils/Navigation/navegationAnimationRightLeft.dart';
 import 'package:pokedex/view/components/features.dart';
-import 'package:pokedex/view/pages/pokedex.dart';
+import 'package:pokedex/view/pages/Pokedex/pokedex.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
