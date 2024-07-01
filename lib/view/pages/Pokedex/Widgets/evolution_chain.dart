@@ -3,49 +3,68 @@ import 'package:pokedex/model/pokemon_model.dart';
 
 class EvolutionSection extends StatelessWidget {
   final Pokemon pokemon;
+  final Color color;
 
-  const EvolutionSection({Key? key, required this.pokemon}) : super(key: key);
+  const EvolutionSection({Key? key, required this.pokemon, required this.color})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+    return SingleChildScrollView(
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(
-            "Evolution Chain",
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              color: Theme.of(context).colorScheme.inversePrimary,
-            ),
-          ),
           SizedBox(height: 10),
           Column(
-            children: pokemon.evolutions.map((evolution) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: Row(
-                  children: [
-                    Image.network(
-                      evolution.imageUrl,
-                      width: 60,
-                      height: 60,
-                    ),
-                    SizedBox(width: 20),
-                    Text(
-                      evolution.name,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.inversePrimary,
+            children: List.generate(pokemon.evolutions.length, (index) {
+              return Column(
+                children: [
+                  Center(
+                    child: Card(
+                      color: color,
+                      elevation: 3,
+                      margin: EdgeInsets.all(20),
+                      child: Stack(
+                        children: [
+                          Positioned(
+                            top: 50,
+                            right: -130,
+                            child: Image.asset(
+                              'assets/images/pokeball.png',
+                              scale: 2.5,
+                              color: Color.fromARGB(82, 255, 255, 255),
+                            ),
+                          ),
+                          Column(
+                            children: [
+                              Text(
+                                pokemon.evolutions[index].name.toUpperCase(),
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              Image.network(
+                                pokemon.evolutions[index].imageUrl,
+                                width: 170,
+                                height: 170,
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                  if (index < pokemon.evolutions.length - 1)
+                    Icon(
+                      Icons.keyboard_double_arrow_down_rounded,
+                      size: 45,
+                      color: Theme.of(context).colorScheme.inversePrimary,
+                    ),
+                ],
               );
-            }).toList(),
+            }),
           ),
         ],
       ),

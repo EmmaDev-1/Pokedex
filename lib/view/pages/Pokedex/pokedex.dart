@@ -1,4 +1,3 @@
-// view/pokedex.dart
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -20,17 +19,14 @@ class PokedexPage extends StatefulWidget {
 class _PokedexPageState extends State<PokedexPage> {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => PokemonViewModel(),
-      child: Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.background,
-        drawer: DrawerMenu(),
-        body: CustomScrollView(
-          slivers: [
-            appBarContent(),
-            pokemonsContent(),
-          ],
-        ),
+    return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
+      drawer: DrawerMenu(),
+      body: CustomScrollView(
+        slivers: [
+          appBarContent(),
+          pokemonsContent(),
+        ],
       ),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:pokedex/model/pokemon_evolution_model.dart';
+import 'package:pokedex/model/pokemon_moves_model.dart';
 import 'package:pokedex/model/pokemon_stats_model.dart';
 
 class Pokemon {
@@ -11,6 +12,8 @@ class Pokemon {
   final List<Stat> stats;
   final List<Evolution> evolutions;
   final List<String> moves;
+  final List<MoveDetail>
+      moveDetails; // Nueva propiedad para detalles de movimientos
   final String description; // Nueva propiedad
   final String gender; // Nueva propiedad
   final List<String> eggGroups; // Nueva propiedad
@@ -26,6 +29,7 @@ class Pokemon {
     required this.stats,
     required this.evolutions,
     required this.moves,
+    required this.moveDetails, // Nuevo parámetro
     required this.description, // Nuevo parámetro
     required this.gender, // Nuevo parámetro
     required this.eggGroups, // Nuevo parámetro
@@ -43,9 +47,10 @@ class Pokemon {
       height: json['height'],
       weight: json['weight'],
       stats: List<Stat>.from(json['stats'].map((stat) => Stat.fromJson(stat))),
-      evolutions: evolutions, // Utiliza los datos de evoluciones
+      evolutions: evolutions,
       moves:
           List<String>.from(json['moves'].map((move) => move['move']['name'])),
+      moveDetails: [], // Inicializar vacío, lo llenaremos después
       description:
           json['description'], // Asume que obtienes este dato de algún lado
       gender: json['gender'], // Asume que obtienes este dato de algún lado

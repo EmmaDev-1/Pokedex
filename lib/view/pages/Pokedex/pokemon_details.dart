@@ -8,18 +8,19 @@ import 'package:pokedex/view/pages/Pokedex/Widgets/moves.dart';
 class PokemonDetails extends StatefulWidget {
   final Pokemon pokemon;
   final Color color;
-  PokemonDetails({super.key, required this.pokemon, required this.color});
+
+  PokemonDetails({Key? key, required this.pokemon, required this.color})
+      : super(key: key);
 
   @override
-  State<PokemonDetails> createState() => _PokemonDetailsState();
+  _PokemonDetailsState createState() => _PokemonDetailsState();
 }
 
 class _PokemonDetailsState extends State<PokemonDetails> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 4, // Número de pestañas
-
+      length: 4,
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: widget.color,
@@ -37,7 +38,8 @@ class _PokemonDetailsState extends State<PokemonDetails> {
                   AboutSection(pokemon: widget.pokemon),
                   BaseStatsSection(
                       pokemon: widget.pokemon, color: widget.color),
-                  EvolutionSection(pokemon: widget.pokemon),
+                  EvolutionSection(
+                      pokemon: widget.pokemon, color: widget.color),
                   MovesSection(pokemon: widget.pokemon),
                 ],
               ),
@@ -48,12 +50,14 @@ class _PokemonDetailsState extends State<PokemonDetails> {
     );
   }
 
-  topStatsSection() {
+  Widget topStatsSection() {
     return Container(
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(30), bottomRight: Radius.circular(30)),
+          bottomLeft: Radius.circular(30),
+          bottomRight: Radius.circular(30),
+        ),
         color: widget.color,
         boxShadow: [
           BoxShadow(
@@ -100,7 +104,8 @@ class _PokemonDetailsState extends State<PokemonDetails> {
                           width: MediaQuery.of(context).size.width * 0.28,
                           height: MediaQuery.of(context).size.height * 0.035,
                           padding: EdgeInsets.all(
-                              MediaQuery.of(context).size.height * 0.002),
+                            MediaQuery.of(context).size.height * 0.002,
+                          ),
                           decoration: BoxDecoration(
                             color: Color.fromARGB(144, 255, 255, 255)
                                 .withOpacity(0.20),

@@ -1,8 +1,10 @@
+// pokemon_view_model.dart
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:pokedex/model/pokemon_evolution_model.dart';
 import 'dart:convert';
+import 'package:pokedex/model/pokemon_evolution_model.dart';
 import 'package:pokedex/model/pokemon_model.dart';
+import 'package:pokedex/model/pokemon_moves_model.dart';
 
 class PokemonViewModel extends ChangeNotifier {
   List<Pokemon> _pokemons = [];
@@ -70,6 +72,24 @@ class PokemonViewModel extends ChangeNotifier {
     }
 
     _isLoading = false;
+    notifyListeners();
+  }
+
+  Future<void> fetchMoveDetails(Pokemon pokemon) async {
+    List<MoveDetail> moveDetails =
+        await Future.wait(pokemon.moves.map((moveName) async {
+      final response = await http
+          .get(Uri.parse('https://pokeapi.co/api/v2/move/$moveName/'));
+      if (response.statusCode == 200) {
+        final moveJson = json.decode(response.body);
+        return MoveDetail.fromJson(moveJson);
+      } else {
+        throw Exception('Failed to load move details');
+      }
+    }).toList());
+
+    // Actualizar el Pokemon con los detalles de los movimientos
+    pokemon.moveDetails.addAll(moveDetails);
     notifyListeners();
   }
 
