@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pokedex/utils/pokedex_voice.dart/voice_provider.dart';
 import 'package:pokedex/utils/theme/theme_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -33,41 +34,83 @@ class _SettingsPageState extends State<SettingsPage> {
           size: 25,
         ),
       ),
-      body: Container(
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.primary,
-          borderRadius: BorderRadius.circular(15),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black
-                  .withOpacity(0.2), // Color de la sombra con opacidad
-              spreadRadius: 2, // Extensión de la sombra
-              blurRadius: 5, // Difuminado de la sombra
-              offset: Offset(0, 3), // Desplazamiento de la sombra
+      body: Column(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.primary,
+              borderRadius: BorderRadius.circular(15),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black
+                      .withOpacity(0.2), // Color de la sombra con opacidad
+                  spreadRadius: 2, // Extensión de la sombra
+                  blurRadius: 5, // Difuminado de la sombra
+                  offset: Offset(0, 3), // Desplazamiento de la sombra
+                ),
+              ],
             ),
-          ],
-        ),
-        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 25),
-        margin: EdgeInsets.only(left: 25, right: 25, top: 10),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              'Light Mode',
-              style: TextStyle(
-                fontSize: MediaQuery.of(context).size.width * 0.045,
-                color: Theme.of(context).colorScheme.inversePrimary,
-                fontFamily: 'QuickSand-Bold',
-              ),
+            padding: EdgeInsets.symmetric(vertical: 20, horizontal: 25),
+            margin: EdgeInsets.only(left: 25, right: 25, top: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Light Mode',
+                  style: TextStyle(
+                    fontSize: MediaQuery.of(context).size.width * 0.045,
+                    color: Theme.of(context).colorScheme.inversePrimary,
+                    fontFamily: 'QuickSand-Bold',
+                  ),
+                ),
+                CupertinoSwitch(
+                  value: Provider.of<ThemeProvider>(context, listen: false)
+                      .isdarkMode,
+                  onChanged: (value) =>
+                      Provider.of<ThemeProvider>(context, listen: false)
+                          .toggleTheme(),
+                ),
+              ],
             ),
-            CupertinoSwitch(
-                value: Provider.of<ThemeProvider>(context, listen: false)
-                    .isdarkMode,
-                onChanged: (value) =>
-                    Provider.of<ThemeProvider>(context, listen: false)
-                        .toggleTheme())
-          ],
-        ),
+          ),
+          SizedBox(height: 20),
+          Container(
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.primary,
+              borderRadius: BorderRadius.circular(15),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black
+                      .withOpacity(0.2), // Color de la sombra con opacidad
+                  spreadRadius: 2, // Extensión de la sombra
+                  blurRadius: 5, // Difuminado de la sombra
+                  offset: Offset(0, 3), // Desplazamiento de la sombra
+                ),
+              ],
+            ),
+            padding: EdgeInsets.symmetric(vertical: 20, horizontal: 25),
+            margin: EdgeInsets.only(left: 25, right: 25, top: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Enable Voice',
+                  style: TextStyle(
+                    fontSize: MediaQuery.of(context).size.width * 0.045,
+                    color: Theme.of(context).colorScheme.inversePrimary,
+                    fontFamily: 'QuickSand-Bold',
+                  ),
+                ),
+                CupertinoSwitch(
+                  value: Provider.of<VoiceProvider>(context).isVoiceEnabled,
+                  onChanged: (value) =>
+                      Provider.of<VoiceProvider>(context, listen: false)
+                          .toggleVoice(),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
