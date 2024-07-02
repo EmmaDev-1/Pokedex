@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pokedex/utils/Navigation/navegationAnimationRightLeft.dart';
 import 'package:pokedex/view/components/features.dart';
-import 'package:pokedex/view/pages/Locations/regions.dart';
+import 'package:pokedex/view/pages/Items/items.dart';
+import 'package:pokedex/view/pages/Regions/regions.dart';
 import 'package:pokedex/view/pages/Pokedex/pokedex.dart';
 import 'package:provider/provider.dart';
 import 'package:pokedex/view_model/pokemon/pokemon_view_model.dart';
@@ -35,11 +36,10 @@ class _DashboardPageState extends State<DashboardPage> {
           color: Colors.red,
           boxShadow: [
             BoxShadow(
-              color: Colors.black
-                  .withOpacity(0.2), // Color de la sombra con opacidad
-              spreadRadius: 2, // Extensión de la sombra
-              blurRadius: 5, // Difuminado de la sombra
-              offset: Offset(0, 3), // Desplazamiento de la sombra
+              color: Colors.black.withOpacity(0.2),
+              spreadRadius: 2,
+              blurRadius: 5,
+              offset: Offset(0, 3),
             ),
           ],
         ),
@@ -140,7 +140,12 @@ class _DashboardPageState extends State<DashboardPage> {
           value1: -10,
           value2: -80,
           color: Colors.teal,
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+              context,
+              crearRuta(context, const ItemsPage()),
+            );
+          },
         ),
         SizedBox(
           height: MediaQuery.of(context).size.height * 0.02,

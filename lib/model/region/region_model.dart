@@ -18,13 +18,11 @@ class Region {
       url: json['url'] ?? '',
       generationUrl:
           json['main_generation'] != null ? json['main_generation']['url'] : '',
-      imageUrl: _getRegionImageUrl(
-          regionName), // Añade esto para inicializar el campo imageUrl
+      imageUrl: _getRegionImageUrl(regionName),
     );
   }
 
   static String _getRegionImageUrl(String regionName) {
-    // Mapa de nombres de regiones a URLs de imágenes
     const Map<String, String> regionImages = {
       'kanto': 'assets/images/regions/kanto.jpg',
       'johto': 'assets/images/regions/johto.jpg',
@@ -36,9 +34,7 @@ class Region {
       'galar': 'assets/images/regions/galar.jpg',
       'hisui': 'assets/images/regions/hisui.jpg',
       'paldea': 'assets/images/regions/paldea.jpg',
-      // Añade más regiones según sea necesario
     };
-    return regionImages[regionName] ??
-        'assets/images/regions/kanto.jpg'; // URL de imagen por defecto
+    return regionImages[regionName] ?? 'assets/images/regions/kanto.jpg';
   }
 }

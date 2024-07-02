@@ -1,4 +1,5 @@
 import 'package:pokedex/model/pokemon/pokemon_evolution_model.dart';
+import 'package:pokedex/utils/end_Points/end_point.dart';
 
 List<Evolution> parseEvolutionChain(Map<String, dynamic> chain) {
   List<Evolution> evolutions = [];
@@ -6,7 +7,7 @@ List<Evolution> parseEvolutionChain(Map<String, dynamic> chain) {
   Evolution currentEvolution = Evolution(
     name: chain['species']['name'],
     imageUrl:
-        'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${getPokemonIdFromUrl(chain['species']['url'])}.png',
+        '$pokedexEvolutionChain${getPokemonIdFromUrl(chain['species']['url'])}.png',
   );
 
   evolutions.add(currentEvolution);
@@ -16,7 +17,7 @@ List<Evolution> parseEvolutionChain(Map<String, dynamic> chain) {
     currentEvolution = Evolution(
       name: chain['species']['name'],
       imageUrl:
-          'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${getPokemonIdFromUrl(chain['species']['url'])}.png',
+          '$pokedexEvolutionChain${getPokemonIdFromUrl(chain['species']['url'])}.png',
     );
     evolutions.add(currentEvolution);
   }

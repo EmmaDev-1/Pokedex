@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:pokedex/model/pokemon/pokemon_model.dart';
-import 'package:pokedex/utils/end_Points/end_point.dart';
 
 class SpeciesViewModel extends ChangeNotifier {
   List<Pokemon> _regionPokemons = [];
@@ -15,27 +14,21 @@ class SpeciesViewModel extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
 
-    _regionPokemons = []; // Limpiar la lista antes de agregar nuevos Pokémon
+    _regionPokemons = [];
 
     try {
       for (String species in pokemonSpecies) {
         if (species.isNotEmpty) {
-          final response = await http.get(Uri.parse('$pokemonspecies$species'));
+          final response = await http.get(Uri.parse('$pokemonSpecies$species'));
 
           if (response.statusCode == 200) {
             var data = json.decode(response.body);
             var pokemon = Pokemon.fromJson(data, []);
             _regionPokemons.add(pokemon);
-          } else {
-            print(
-                'Error fetching data for species: $species, status code: ${response.statusCode}');
-          }
-        } else {
-          print('Invalid species: $species');
-        }
+          } else {}
+        } else {}
       }
     } catch (error) {
-      print('Error fetching region pokemons: $error');
     } finally {
       _isLoading = false;
       notifyListeners();

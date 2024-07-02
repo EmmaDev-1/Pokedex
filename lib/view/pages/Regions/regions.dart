@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pokedex/utils/Navigation/navegationAnimationRightLeft.dart';
-import 'package:pokedex/view/pages/Locations/region_details.dart';
+import 'package:pokedex/view/pages/Regions/region_details.dart';
 import 'package:pokedex/view/pages/settings.dart';
 import 'package:provider/provider.dart';
 import 'package:pokedex/view_model/region/region_view_model.dart';
