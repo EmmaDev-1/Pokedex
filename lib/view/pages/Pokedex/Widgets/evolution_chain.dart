@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pokedex/model/pokemon_model.dart';
+import 'package:pokedex/model/pokemon/pokemon_model.dart';
 
 class EvolutionSection extends StatelessWidget {
   final Pokemon pokemon;

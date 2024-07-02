@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:pokedex/utils/Navigation/navegationAnimationRightLeft.dart';
 import 'package:pokedex/view/components/features.dart';
 import 'package:pokedex/view/pages/Pokedex/pokedex.dart';
+import 'package:provider/provider.dart';
+import 'package:pokedex/view_model/pokemon/pokemon_view_model.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
@@ -48,7 +50,7 @@ class _DashboardPageState extends State<DashboardPage> {
               child: Image.asset(
                 'assets/images/pokeball.png',
                 scale: 1.8,
-                color: Color.fromARGB(88, 122, 122, 122),
+                color: Color.fromARGB(90, 255, 255, 255),
               ),
             ),
             Padding(
@@ -70,30 +72,39 @@ class _DashboardPageState extends State<DashboardPage> {
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.05,
                   ),
-                  TextField(
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontFamily: 'QuickSand',
-                      fontWeight: FontWeight.w600,
-                    ),
-                    decoration: InputDecoration(
-                        hintText: "Search Pokémon",
-                        filled: true,
-                        fillColor: Colors.grey.shade200,
-                        border: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(30)),
-                        hintStyle: TextStyle(
+                  Consumer<PokemonViewModel>(
+                    builder: (context, viewModel, child) {
+                      return TextField(
+                        onChanged: (query) {
+                          viewModel.searchPokemon(query);
+                        },
+                        style: const TextStyle(
+                          color: Colors.black,
                           fontSize: 16,
                           fontFamily: 'QuickSand',
                           fontWeight: FontWeight.w600,
-                          color: Color.fromARGB(255, 155, 155, 155),
                         ),
-                        prefixIcon: Icon(
-                          Icons.search,
-                          color: Color.fromARGB(255, 155, 155, 155),
-                        )),
+                        decoration: InputDecoration(
+                          hintText: "Search Pokémon",
+                          filled: true,
+                          fillColor: Colors.grey.shade200,
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide.none,
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          hintStyle: TextStyle(
+                            fontSize: 16,
+                            fontFamily: 'QuickSand',
+                            fontWeight: FontWeight.w600,
+                            color: Color.fromARGB(255, 155, 155, 155),
+                          ),
+                          prefixIcon: Icon(
+                            Icons.search,
+                            color: Color.fromARGB(255, 155, 155, 155),
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),
@@ -110,7 +121,7 @@ class _DashboardPageState extends State<DashboardPage> {
         ),
         FeatureComponent(
           title: 'Pokedex',
-          value1: -40,
+          value1: -50,
           value2: -80,
           color: Colors.blue,
           onTap: () {
@@ -125,24 +136,20 @@ class _DashboardPageState extends State<DashboardPage> {
         ),
         FeatureComponent(
           title: 'Abilities',
-          value1: -5,
+          value1: -10,
           value2: -80,
           color: Colors.green,
-          onTap: () {
-            Navigator.pop(context);
-          },
+          onTap: () {},
         ),
         SizedBox(
           height: MediaQuery.of(context).size.height * 0.02,
         ),
         FeatureComponent(
           title: 'Locations',
-          value1: 20,
+          value1: 30,
           value2: -80,
           color: Color.fromARGB(214, 97, 27, 109),
-          onTap: () {
-            Navigator.pop(context);
-          },
+          onTap: () {},
         ),
       ],
     );

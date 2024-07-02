@@ -1,13 +1,15 @@
+import 'package:anim_search_bar/anim_search_bar.dart';
+import 'package:animations/animations.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pokedex/utils/Navigation/navegationAnimationRightLeft.dart';
-import 'package:pokedex/utils/get_colors/get_pokemon_colors.dart';
-import 'package:pokedex/view/components/drawer.dart';
+import 'package:pokedex/utils/get_Colors/get_pokemon_colors.dart';
 import 'package:pokedex/view/pages/Pokedex/pokemon_details.dart';
-import 'package:pokedex/view_model/pokemon_view_model.dart';
+import 'package:pokedex/view/pages/settings.dart';
 import 'package:provider/provider.dart';
+import 'package:pokedex/view_model/pokemon/pokemon_view_model.dart';
 
 class PokedexPage extends StatefulWidget {
   const PokedexPage({super.key});
@@ -17,12 +19,41 @@ class PokedexPage extends StatefulWidget {
 }
 
 class _PokedexPageState extends State<PokedexPage> {
+  final ScrollController _scrollController = ScrollController();
+  final TextEditingController _searchController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_onScroll);
+    _searchController.addListener(_onSearchChanged);
+  }
+
+  void _onScroll() {
+    if (_scrollController.position.pixels ==
+        _scrollController.position.maxScrollExtent) {
+      Provider.of<PokemonViewModel>(context, listen: false).fetchPokemons();
+    }
+  }
+
+  void _onSearchChanged() {
+    Provider.of<PokemonViewModel>(context, listen: false)
+        .searchPokemon(_searchController.text);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    _searchController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      drawer: DrawerMenu(),
       body: CustomScrollView(
+        controller: _scrollController,
         slivers: [
           appBarContent(),
           pokemonsContent(),
@@ -31,7 +62,7 @@ class _PokedexPageState extends State<PokedexPage> {
     );
   }
 
-  appBarContent() {
+  Widget appBarContent() {
     return SliverAppBar(
       centerTitle: true,
       pinned: true,
@@ -68,14 +99,52 @@ class _PokedexPageState extends State<PokedexPage> {
                     ),
                   )
                 : null,
-            background: Image.asset(
-              'assets/images/pokedex.png',
-              scale: 1.5,
+            background: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Container(
+                    height: 65,
+                  ),
+                  Image.asset(
+                    'assets/images/pokemon.png',
+                    scale: 4.5,
+                  ),
+                ],
+              ),
             ),
-            collapseMode: CollapseMode.none,
           );
         },
       ),
+      actions: [
+        AnimSearchBar(
+          prefixIcon: Icon(
+            Icons.search,
+            weight: 15,
+          ),
+          width: MediaQuery.of(context).size.width * 0.75,
+          textController: _searchController,
+          color: Colors.transparent,
+          boxShadow: false,
+          textFieldColor: Theme.of(context).colorScheme.primary,
+          helpText: "Search Pokémon",
+          closeSearchOnSuffixTap: true,
+          onSuffixTap: () {
+            _searchController.clear();
+            Provider.of<PokemonViewModel>(context, listen: false)
+                .searchPokemon('');
+          },
+          onSubmitted: (String) {},
+        ),
+        IconButton(
+          icon: Icon(Icons.settings),
+          onPressed: () {
+            Navigator.push(
+              context,
+              crearRuta(context, const SettingsPage()),
+            );
+          },
+        ),
+      ],
       bottom: PreferredSize(
         preferredSize: const Size.fromHeight(12.0),
         child: Container(
@@ -102,7 +171,7 @@ class _PokedexPageState extends State<PokedexPage> {
     );
   }
 
-  pokemonsContent() {
+  Widget pokemonsContent() {
     return SliverToBoxAdapter(
       child: Consumer<PokemonViewModel>(
         builder: (context, viewModel, child) {
@@ -123,160 +192,177 @@ class _PokedexPageState extends State<PokedexPage> {
               ),
             );
           } else {
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: AnimationLimiter(
-                child: GridView.builder(
-                  // Eliminamos el controlador del GridView
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount:
-                      viewModel.pokemons.length + (viewModel.isLoading ? 1 : 0),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2, // Número de columnas
-                    crossAxisSpacing: 10.0, // Espacio horizontal entre columnas
-                    mainAxisSpacing: 15.0, // Espacio vertical entre filas
-                    childAspectRatio: 0.92, // Proporción del aspecto del hijo
-                  ),
-                  itemBuilder: (context, index) {
-                    if (index == viewModel.pokemons.length) {
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-                    var pokemon = viewModel.pokemons[index];
-                    var color = getTypeColor(pokemon.types.first);
+            return Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: AnimationLimiter(
+                    child: GridView.builder(
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: viewModel.filteredPokemons.length,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2, // Número de columnas
+                        crossAxisSpacing:
+                            10.0, // Espacio horizontal entre columnas
+                        mainAxisSpacing: 15.0, // Espacio vertical entre filas
+                        childAspectRatio:
+                            0.92, // Proporción del aspecto del hijo
+                      ),
+                      itemBuilder: (context, index) {
+                        var pokemon = viewModel.filteredPokemons[index];
+                        var color = getTypeColor(pokemon.types.first);
 
-                    return AnimationConfiguration.staggeredGrid(
-                      position: index,
-                      columnCount: 2,
-                      duration: const Duration(milliseconds: 500),
-                      child: ScaleAnimation(
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              crearRuta(
-                                  context,
-                                  PokemonDetails(
-                                      pokemon: pokemon, color: color)),
-                            );
-                          },
-                          child: Card(
-                            color: color,
-                            elevation: 15,
-                            child: Stack(
-                              children: [
-                                Positioned(
-                                  top: 55,
-                                  right: -70,
-                                  child: Image.asset(
-                                    'assets/images/pokeball.png',
-                                    scale: 3.5,
-                                    color: Color.fromARGB(82, 255, 255, 255),
+                        return AnimationConfiguration.staggeredGrid(
+                          position: index,
+                          columnCount: 1,
+                          duration: const Duration(milliseconds: 600),
+                          child: ScaleAnimation(
+                            child: OpenContainer(
+                              transitionType: ContainerTransitionType.fade,
+                              openBuilder: (context, _) => PokemonDetails(
+                                  pokemon: pokemon, color: color),
+                              closedElevation: 15,
+                              closedShape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              closedColor: color,
+                              closedBuilder: (context, openContainer) => Stack(
+                                children: [
+                                  Positioned(
+                                    top: 55,
+                                    right: -70,
+                                    child: Image.asset(
+                                      'assets/images/pokeball.png',
+                                      scale: 3.5,
+                                      color: Color.fromARGB(82, 255, 255, 255),
+                                    ),
                                   ),
-                                ),
-                                Center(
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        pokemon.name.toUpperCase(),
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.05,
-                                          fontFamily: 'Quicksand-Bold',
-                                          color: Colors.white,
+                                  Center(
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          pokemon.name.toUpperCase(),
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.05,
+                                            fontFamily: 'Quicksand-Bold',
+                                            color: Colors.white,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
                                         ),
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                      Column(
-                                        children: [
-                                          Container(
-                                            margin: EdgeInsets.only(
-                                              bottom: MediaQuery.of(context)
+                                        Column(
+                                          children: [
+                                            Container(
+                                              margin: EdgeInsets.only(
+                                                bottom: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.01,
+                                              ),
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.03,
+                                              width: MediaQuery.of(context)
                                                       .size
                                                       .width *
-                                                  0.01,
-                                            ),
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.03,
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                1,
-                                            alignment: Alignment.center,
-                                            child: Wrap(
-                                              spacing: 5.0,
-                                              runSpacing: 5.0,
-                                              children:
-                                                  pokemon.types.map((type) {
-                                                return Container(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.18,
-                                                  padding: EdgeInsets.all(
-                                                      MediaQuery.of(context)
-                                                              .size
-                                                              .height *
-                                                          0.002),
-                                                  decoration: BoxDecoration(
-                                                    color: Color.fromARGB(
-                                                            29, 0, 0, 0)
-                                                        .withOpacity(0.20),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            15),
-                                                  ),
-                                                  child: Text(
-                                                    type.toUpperCase(),
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
-                                                      fontSize:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              0.035,
-                                                      fontFamily:
-                                                          'Quicksand-Bold',
-                                                      color: Colors.white,
+                                                  1,
+                                              alignment: Alignment.center,
+                                              child: Wrap(
+                                                spacing: 5.0,
+                                                runSpacing: 5.0,
+                                                children:
+                                                    pokemon.types.map((type) {
+                                                  return Container(
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.18,
+                                                    padding: EdgeInsets.all(
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .height *
+                                                            0.002),
+                                                    decoration: BoxDecoration(
+                                                      color: Color.fromARGB(
+                                                              29, 0, 0, 0)
+                                                          .withOpacity(0.20),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              15),
                                                     ),
-                                                  ),
-                                                );
-                                              }).toList(),
+                                                    child: Text(
+                                                      type.toUpperCase(),
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: TextStyle(
+                                                        fontSize: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width *
+                                                            0.035,
+                                                        fontFamily:
+                                                            'Quicksand-Bold',
+                                                        color: Colors.white,
+                                                      ),
+                                                    ),
+                                                  );
+                                                }).toList(),
+                                              ),
                                             ),
-                                          ),
-                                          Image.network(
-                                            pokemon.imageUrl,
-                                            fit: BoxFit.cover,
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.14,
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.34,
-                                          ),
-                                        ],
-                                      ),
-                                    ],
+                                            CachedNetworkImage(
+                                              imageUrl: pokemon.imageUrl,
+                                              fit: BoxFit.cover,
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.14,
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.34,
+                                              placeholder: (context, url) =>
+                                                  Lottie.asset(
+                                                'assets/animations/pokeballLoading.json',
+                                                width: 40,
+                                                height: 40,
+                                              ),
+                                              errorWidget:
+                                                  (context, url, error) =>
+                                                      Icon(Icons.error),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      ),
-                    );
-                  },
+                        );
+                      },
+                    ),
+                  ),
                 ),
-              ),
+                if (viewModel.isLoading)
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Center(
+                      child: Lottie.asset(
+                        'assets/animations/pokeballLoading.json',
+                        width: 60,
+                        height: 60,
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                  ),
+              ],
             );
           }
         },

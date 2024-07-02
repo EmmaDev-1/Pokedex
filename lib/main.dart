@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:pokedex/utils/pokedex_voice.dart/voice_provider.dart';
 import 'package:pokedex/utils/theme/theme_provider.dart';
 import 'package:pokedex/view/pages/dashboard.dart';
-import 'package:pokedex/view_model/pokemon_view_model.dart';
+import 'package:pokedex/view_model/pokemon/pokemon_view_model.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -18,6 +19,7 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (context) => ThemeProvider()),
         ChangeNotifierProvider(create: (context) => PokemonViewModel()),
+        ChangeNotifierProvider(create: (_) => VoiceProvider()),
       ],
       child: const MyApp(),
     ),

@@ -1,6 +1,6 @@
-import 'package:pokedex/model/pokemon_evolution_model.dart';
-import 'package:pokedex/model/pokemon_moves_model.dart';
-import 'package:pokedex/model/pokemon_stats_model.dart';
+import 'package:pokedex/model/pokemon/pokemon_evolution_model.dart';
+import 'package:pokedex/model/pokemon/pokemon_moves_model.dart';
+import 'package:pokedex/model/pokemon/pokemon_stats_model.dart';
 
 class Pokemon {
   final String name;
