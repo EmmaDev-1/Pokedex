@@ -23,7 +23,7 @@ Widget typesTab() {
               crossAxisCount: 2,
               crossAxisSpacing: 10.0,
               mainAxisSpacing: 15.0,
-              childAspectRatio: 3, // Proporción del aspecto del hijo
+              childAspectRatio: 3,
             ),
             itemBuilder: (context, index) {
               final type = viewModel.generation!.types[index];

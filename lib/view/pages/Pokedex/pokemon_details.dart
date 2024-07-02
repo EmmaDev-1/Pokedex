@@ -22,17 +22,17 @@ class PokemonDetails extends StatefulWidget {
 }
 
 class _PokemonDetailsState extends State<PokemonDetails> {
-  final PokedexVoice ttsService = PokedexVoice(); // Inicializar el servicio
+  final PokedexVoice ttsService = PokedexVoice();
 
   @override
   void initState() {
     super.initState();
-    _speakPokemonDetails(); // Llamar a la función al iniciar el estado
+    _speakPokemonDetails();
   }
 
   @override
   void dispose() {
-    ttsService.stop(); // Detener la voz al salir de la pantalla
+    ttsService.stop();
     super.dispose();
   }
 
@@ -40,7 +40,7 @@ class _PokemonDetailsState extends State<PokemonDetails> {
     if (Provider.of<VoiceProvider>(context, listen: false).isVoiceEnabled) {
       String text =
           "${widget.pokemon.name}. This is a ${widget.pokemon.types.join(', ')} type pokemon. ${widget.pokemon.description}. It has a height of ${widget.pokemon.height / 10} meters and weighs ${widget.pokemon.weight / 10} kilograms";
-      await ttsService.speak(text); // Usar el servicio de texto a voz
+      await ttsService.speak(text);
     }
   }
 

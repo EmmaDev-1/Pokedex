@@ -33,11 +33,10 @@ class AboutSection extends StatelessWidget {
                 borderRadius: BorderRadius.circular(15),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black
-                        .withOpacity(0.2), // Color de la sombra con opacidad
-                    spreadRadius: 2, // Extensión de la sombra
-                    blurRadius: 5, // Difuminado de la sombra
-                    offset: Offset(0, 3), // Desplazamiento de la sombra
+                    color: Colors.black.withOpacity(0.2),
+                    spreadRadius: 2,
+                    blurRadius: 5,
+                    offset: Offset(0, 3),
                   ),
                 ],
               ),

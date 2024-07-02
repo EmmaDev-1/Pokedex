@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:pokedex/model/location/generation_model.dart';
-import 'package:pokedex/model/location/location_model.dart';
-import 'package:pokedex/model/location/region_model.dart';
+import 'package:pokedex/model/region/generation_model.dart';
+import 'package:pokedex/model/region/location_model.dart';
+import 'package:pokedex/model/region/region_model.dart';
 import 'dart:convert';
 
 import 'package:pokedex/utils/end_Points/end_point.dart';

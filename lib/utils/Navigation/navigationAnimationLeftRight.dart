@@ -9,7 +9,7 @@ PageRouteBuilder crearRutaIzquierdaADerecha(
           SlideTransition(
             position: Tween<Offset>(
               begin: Offset.zero,
-              end: const Offset(1.0, 0.0), // Invertido para izquierda a derecha
+              end: const Offset(1.0, 0.0),
             ).animate(
               CurvedAnimation(
                 parent: animation,
@@ -19,8 +19,7 @@ PageRouteBuilder crearRutaIzquierdaADerecha(
           ),
           SlideTransition(
             position: Tween<Offset>(
-              begin:
-                  const Offset(-1.0, 0.0), // Invertido para izquierda a derecha
+              begin: const Offset(-1.0, 0.0),
               end: Offset.zero,
             ).animate(
               CurvedAnimation(

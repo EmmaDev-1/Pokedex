@@ -14,7 +14,6 @@ class MoveDetail {
   });
 
   factory MoveDetail.fromJson(Map<String, dynamic> json) {
-    // Encontrar la descripción del movimiento en el JSON
     String effect = '';
     if (json['flavor_text_entries'] != null) {
       final flavorTextEntries = json['flavor_text_entries'] as List;
@@ -32,7 +31,7 @@ class MoveDetail {
       type: json['type']['name'],
       power: json['power'] ?? 0,
       accuracy: json['accuracy'] ?? 0,
-      effect: effect, // Asignar descripción
+      effect: effect,
     );
   }
 }

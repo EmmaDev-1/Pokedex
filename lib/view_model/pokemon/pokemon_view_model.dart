@@ -38,14 +38,11 @@ class PokemonViewModel extends ChangeNotifier {
         List<Pokemon> newPokemons = await compute(fetchPokemonDetails, results);
 
         _pokemons.addAll(newPokemons);
-        _filteredPokemons = List.from(
-            _pokemons); // Inicialmente, todos los Pokémon son mostrados
+        _filteredPokemons = List.from(_pokemons);
       } else {
         throw Exception('Failed to load pokemons');
       }
     } catch (e) {
-      // Manejar error
-      print("Error fetching pokemons: $e");
     } finally {
       _isLoading = false;
       notifyListeners();

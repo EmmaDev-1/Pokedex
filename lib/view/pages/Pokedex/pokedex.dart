@@ -202,12 +202,10 @@ class _PokedexPageState extends State<PokedexPage> {
                       shrinkWrap: true,
                       itemCount: viewModel.filteredPokemons.length,
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2, // Número de columnas
-                        crossAxisSpacing:
-                            10.0, // Espacio horizontal entre columnas
-                        mainAxisSpacing: 15.0, // Espacio vertical entre filas
-                        childAspectRatio:
-                            0.92, // Proporción del aspecto del hijo
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 10.0,
+                        mainAxisSpacing: 15.0,
+                        childAspectRatio: 0.92,
                       ),
                       itemBuilder: (context, index) {
                         var pokemon = viewModel.filteredPokemons[index];

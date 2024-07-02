@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pokedex/utils/Navigation/navegationAnimationRightLeft.dart';
-import 'package:pokedex/view/pages/Locations/locations.dart';
-import 'package:pokedex/view/pages/Locations/species.dart';
-import 'package:pokedex/view/pages/Locations/types.dart';
+import 'package:pokedex/view/pages/Regions/Widgets/locations.dart';
+import 'package:pokedex/view/pages/Regions/Widgets/species.dart';
+import 'package:pokedex/view/pages/Regions/Widgets/types.dart';
 import 'package:pokedex/view/pages/settings.dart';
 import 'package:pokedex/view_model/region/species_view_model.dart';
 import 'package:provider/provider.dart';
