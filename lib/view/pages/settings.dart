@@ -56,7 +56,7 @@ class _SettingsPageState extends State<SettingsPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Light Mode',
+                  'Dark Mode',
                   style: TextStyle(
                     fontSize: MediaQuery.of(context).size.width * 0.045,
                     color: Theme.of(context).colorScheme.inversePrimary,

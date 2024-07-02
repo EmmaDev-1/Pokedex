@@ -12,12 +12,11 @@ class Pokemon {
   final List<Stat> stats;
   final List<Evolution> evolutions;
   final List<String> moves;
-  final List<MoveDetail>
-      moveDetails; // Nueva propiedad para detalles de movimientos
-  final String description; // Nueva propiedad
-  final String gender; // Nueva propiedad
-  final List<String> eggGroups; // Nueva propiedad
-  final String eggCycle; // Nueva propiedad
+  final List<MoveDetail> moveDetails;
+  final String description;
+  final String gender;
+  final List<String> eggGroups;
+  final String eggCycle;
 
   Pokemon({
     required this.name,
@@ -29,34 +28,43 @@ class Pokemon {
     required this.stats,
     required this.evolutions,
     required this.moves,
-    required this.moveDetails, // Nuevo parámetro
-    required this.description, // Nuevo parámetro
-    required this.gender, // Nuevo parámetro
-    required this.eggGroups, // Nuevo parámetro
-    required this.eggCycle, // Nuevo parámetro
+    required this.moveDetails,
+    required this.description,
+    required this.gender,
+    required this.eggGroups,
+    required this.eggCycle,
   });
 
   factory Pokemon.fromJson(
       Map<String, dynamic> json, List<Evolution> evolutions) {
     return Pokemon(
-      name: json['name'],
-      url: json['url'],
-      types:
-          List<String>.from(json['types'].map((type) => type['type']['name'])),
-      imageUrl: json['sprites']['other']['official-artwork']['front_default'],
-      height: json['height'],
-      weight: json['weight'],
-      stats: List<Stat>.from(json['stats'].map((stat) => Stat.fromJson(stat))),
+      name: json['name'] ?? 'Unknown',
+      url: json['url'] ?? '',
+      types: (json['types'] as List<dynamic>?)
+              ?.map((type) => type['type']['name'] as String)
+              .toList() ??
+          [],
+      imageUrl:
+          json['sprites']['other']['official-artwork']['front_default'] ?? '',
+      height: json['height'] ?? 0,
+      weight: json['weight'] ?? 0,
+      stats: (json['stats'] as List<dynamic>?)
+              ?.map((stat) => Stat.fromJson(stat))
+              .toList() ??
+          [],
       evolutions: evolutions,
-      moves:
-          List<String>.from(json['moves'].map((move) => move['move']['name'])),
-      moveDetails: [], // Inicializar vacío, lo llenaremos después
-      description:
-          json['description'], // Asume que obtienes este dato de algún lado
-      gender: json['gender'], // Asume que obtienes este dato de algún lado
-      eggGroups: List<String>.from(json['egg_groups'].map((group) =>
-          group['name'])), // Asume que obtienes este dato de algún lado
-      eggCycle: json['egg_cycle'], // Asume que obtienes este dato de algún lado
+      moves: (json['moves'] as List<dynamic>?)
+              ?.map((move) => move['move']['name'] as String)
+              .toList() ??
+          [],
+      moveDetails: [],
+      description: json['description'] ?? 'No description available',
+      gender: json['gender'] ?? 'Unknown',
+      eggGroups: (json['egg_groups'] as List<dynamic>?)
+              ?.map((group) => group['name'] as String)
+              .toList() ??
+          [],
+      eggCycle: json['egg_cycle'] ?? 'Unknown',
     );
   }
 }

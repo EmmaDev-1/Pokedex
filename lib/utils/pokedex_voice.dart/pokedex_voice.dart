@@ -5,7 +5,7 @@ class PokedexVoice {
 
   Future<void> speak(String text) async {
     await flutterTts.setLanguage("en-US");
-    await flutterTts.setPitch(0.5);
+    await flutterTts.setPitch(0.65);
     await flutterTts.setSpeechRate(0.55);
     await flutterTts.setVolume(1);
     await flutterTts.speak(text);
