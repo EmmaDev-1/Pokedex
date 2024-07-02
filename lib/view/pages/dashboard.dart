@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pokedex/utils/Navigation/navegationAnimationRightLeft.dart';
 import 'package:pokedex/view/components/features.dart';
+import 'package:pokedex/view/pages/Locations/regions.dart';
 import 'package:pokedex/view/pages/Pokedex/pokedex.dart';
 import 'package:provider/provider.dart';
 import 'package:pokedex/view_model/pokemon/pokemon_view_model.dart';
@@ -135,21 +136,26 @@ class _DashboardPageState extends State<DashboardPage> {
           height: MediaQuery.of(context).size.height * 0.02,
         ),
         FeatureComponent(
-          title: 'Abilities',
+          title: 'Iteams',
           value1: -10,
           value2: -80,
-          color: Colors.green,
+          color: Colors.teal,
           onTap: () {},
         ),
         SizedBox(
           height: MediaQuery.of(context).size.height * 0.02,
         ),
         FeatureComponent(
-          title: 'Locations',
+          title: 'Regions',
           value1: 30,
           value2: -80,
           color: Color.fromARGB(214, 97, 27, 109),
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+              context,
+              crearRuta(context, const RegionPage()),
+            );
+          },
         ),
       ],
     );
