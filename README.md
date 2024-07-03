@@ -39,16 +39,16 @@ experience, with features tailored for Android devices.
 ### Steps
 
 1. Clone the repository:
-   git clone [https://github.com/EmmaDev-1/Pokedex.git](https://github.com/EmmaDev-1/Pokedex.git)
+      git clone [https://github.com/EmmaDev-1/Pokedex.git](https://github.com/EmmaDev-1/Pokedex.git)
    
-2. Navigate to the project directory:
-  cd Pokedex
+3. Navigate to the project directory:
+      cd Pokedex
 
-3. Install dependencies:
-  flutter pub get
+4. Install dependencies:
+      flutter pub get
 
-4. Run the app on your Android device or emulator:
-     flutter run
+5. Run the app on your Android device or emulator:
+       flutter run
 
 
 ## App Structure
