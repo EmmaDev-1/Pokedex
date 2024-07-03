@@ -1,6 +1,8 @@
-                                                    # Pokemon App
+# Pokemon App
+
                                                     
                                   📱🐱‍👤🐉💻 Pokemon Application Documentation 📱🐱‍👤🐉💻
+                                  
                                   
 ## Overview
 
@@ -25,7 +27,7 @@ experience, with features tailored for Android devices.
 
     ◽ View a list of regions.
     ◽ Click on a region to see locations, species of Pokemon found in that region, and types of Pokemon.
-
+    
 
 ## Installation
 
@@ -64,30 +66,31 @@ This app follows the MVVM (Model-View-ViewModel) design pattern, ensuring a clea
 ◽ The minimum SDK version required to run this app is 21.
 
 
-##Usage
-###Pokedex
+## Usage
+
+### Pokedex
 
 ◽ Navigate to the Pokedex section to see a list of Pokemon.
 ◽ Use the search bar to find Pokemon by name.
 ◽ Click on a Pokemon to view detailed information and hear a voice description, which can be disabled in the settings.
 
-###Items
+### Items
 
 ◽ Navigate to the Items section to see a list of items.
 ◽ Click on an item to view detailed information and related items, with an option for a voice description.
 
-###Regions
+### Regions
 
 ◽ Navigate to the Regions section to see a list of regions.
 ◽ Click on a region to view locations, species of Pokemon, and types of Pokemon found there.
 
 
-##Version Control
+## Version Control
 
 This project uses Git for version control. You can find the repository on GitHub: [My Repositories](https://github.com/EmmaDev-1?tab=repositories)
 
 
-##Contributing
+## Contributing
 
 If you wish to contribute to this project, please follow these steps:
 
@@ -97,6 +100,6 @@ If you wish to contribute to this project, please follow these steps:
 4. Push to the branch (git push origin feature-branch).
 5. Open a pull request.
 
-##License
+## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
