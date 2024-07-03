@@ -1,5 +1,7 @@
-# Pokemon App
-
+                                                    # Pokemon App
+                                                    
+                                  📱🐱‍👤🐉💻 Pokemon Application Documentation 📱🐱‍👤🐉💻
+                                  
 ## Overview
 
 Welcome to the Pokemon App! This app is designed to provide users with a comprehensive Pokedex, details about various items, 
@@ -35,7 +37,7 @@ experience, with features tailored for Android devices.
 ### Steps
 
 1. Clone the repository:
-   git clone [https://github.com/your-username/Pokedex.git](https://github.com/EmmaDev-1/Pokedex.git)
+   git clone [https://github.com/EmmaDev-1/Pokedex.git](https://github.com/EmmaDev-1/Pokedex.git)
    
 2. Navigate to the project directory:
   cd Pokedex
@@ -82,7 +84,7 @@ This app follows the MVVM (Model-View-ViewModel) design pattern, ensuring a clea
 
 ##Version Control
 
-This project uses Git for version control. You can find the repository on GitHub: 
+This project uses Git for version control. You can find the repository on GitHub: [My Repositories](https://github.com/EmmaDev-1?tab=repositories)
 
 
 ##Contributing
