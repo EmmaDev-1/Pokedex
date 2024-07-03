@@ -35,7 +35,7 @@ experience, with features tailored for Android devices.
 ### Steps
 
 1. Clone the repository:
-   git clone https://github.com/your-username/Pokedex.git
+   git clone [https://github.com/your-username/Pokedex.git](https://github.com/EmmaDev-1/Pokedex.git)
    
 2. Navigate to the project directory:
   cd Pokedex
