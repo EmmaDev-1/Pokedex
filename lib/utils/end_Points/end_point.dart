@@ -16,7 +16,7 @@ var pokemonMoves = 'https://pokeapi.co/api/v2/move/';
 var pokemonRegion = 'https://pokeapi.co/api/v2/region';
 
 //Get species
-var pokemonSpecies = 'https://pokeapi.co/api/v2/pokemon/';
+var pokemonspecies = 'https://pokeapi.co/api/v2/pokemon/';
 
 //ITEM API
 
